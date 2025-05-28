@@ -2,7 +2,7 @@
 ## Member List
 1. Châu Thế Khanh - 03275337xx - B2207528 - khanhb2207528@student.ctu.edu.vn
 2. Lý Trí Khải - 08480414xx - B2207530 - khaib2207530@student.ctu.edu.vn
-3. 
+3. Nguyễn Lê Tấn Thành
 
 ## Technologies Used:
 - Python 3.10
