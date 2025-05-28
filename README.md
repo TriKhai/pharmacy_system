@@ -13,3 +13,5 @@ React 5.1
 django-crispy-forms 2.1
 crispy-bootstrap4 2023.1
 Pillow 10.1.0
+
+##
