@@ -1,0 +1,22 @@
+GET: /api/v1/
+
+        REG: 
+        RES:
+        {
+            "message": "Hello World",
+        }
+
+POST: /api/v1/user/login
+
+        REG: 
+        {
+
+        }
+
+        RES:
+        {
+            "message": "Đăng nhập thành công!",
+            "user": {
+
+            }
+        }
