@@ -1,5 +1,5 @@
 import axios from "axios";
-export const DOMAIN: string = "http://localhost:8080";
+export const DOMAIN: string = "http://localhost:8000";
 export const ACCESS_TOKEN: string = "token";
 
 const axiosClient = axios.create({

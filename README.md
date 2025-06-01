@@ -27,4 +27,3 @@ Gợi ý tính năng:
 Function: Hàm trả về số lượng thuốc còn lại trong kho của một loại thuốc.  Trigger: Tự động thông báo khi thuốc sắp hết hạn (trước 30 ngày)
 Stored Procedure: Danh sách thuốc thuộc một loại thuốc xác định (Ví dụ: Truyền vào tham số loại thuốc là “kháng sinh”, hiển thị danh sách các thuốc có công dụng tương tự)
 Thống kê: Báo cáo doanh thu theo tuần, theo ngày, theo tháng.
-
