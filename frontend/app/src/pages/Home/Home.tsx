@@ -20,8 +20,8 @@ function Hello() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-2">Hello World!</h1>
-      <p className="text-gray-700">Connecting backend: {message}</p>
+      <h1 className="text-2xl font-bold mb-2">{message}</h1>
+
     </div>
   );
 }
