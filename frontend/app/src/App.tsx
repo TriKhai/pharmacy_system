@@ -8,11 +8,11 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route index path="/api/v1" element={<Home />} />
+          <Route index path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
         </Routes>
       </Router>
-    </>
+    </> 
   )
 }
 
