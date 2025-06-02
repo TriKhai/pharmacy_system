@@ -1,9 +1,8 @@
 import axios from "axios";
-export const DOMAIN: string = "http://localhost:8000";
-export const ACCESS_TOKEN: string = "token";
+const API_URL = import.meta.env.VITE_API_URL
 
 const axiosClient = axios.create({
-  baseURL: DOMAIN, 
+  baseURL: API_URL, 
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -14,11 +13,8 @@ const axiosClient = axios.create({
 // Request interceptor
 axiosClient.interceptors.request.use(
   (config) => {
-    // const token = localStore.get("token");
-
-    // if (token) {
-    //   config.headers.token = `Bearer ${token}`;
-    // }
+    
+    // .... 
 
     return config;
   },

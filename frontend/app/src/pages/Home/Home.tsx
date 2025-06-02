@@ -6,7 +6,7 @@ function Hello() {
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    axiosClient.get('/hello', {
+    axiosClient.get('/api/v1/', {
       responseType: 'text'  
     })
     .then((res) => {
