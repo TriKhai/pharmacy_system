@@ -6,7 +6,7 @@ function Hello() {
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    axios.get('http://localhost:8000/hello', {
+    axios.get('http://localhost:8000/api/v1/', {
       responseType: 'text'  
     })
     .then((res) => {
