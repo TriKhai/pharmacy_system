@@ -11,11 +11,30 @@ def hello(request):
     return HttpResponse("Hello World", content_type="text/plain")
 
 class KhachHangList(APIView):
-    def get(self, request):
-        ds_kh = KhachHangModel.objects.all()
-        serializer = KhachHangSerializer(ds_kh, many=True)
-        return Response(serializer.data)
+    
+    def get_serializer(self, *args, **kwargs):
+        return KhachHangSerializer(*args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        user = request.user 
+        user_ser = self.get_serializer(user)
+        return Response({
+            'data': user_ser.data
+        }, status=200)
 
+    def put(self, request, *args, **kwargs):
+        user = request.user
+        user_ser = self.get_serializer(user, data=request.data)
+        user_ser.is_valid(raise_exception=True)
+        user.TenKhachHang = user_ser.validated_data['TenKhachHang']
+
+        user.save()
+
+        return Response({
+            'message': ' --------------- '
+        }, status=200)
+        
+        
     def post(self, request):
         serializer = KhachHangSerializer(data=request.data)
         if serializer.is_valid():
