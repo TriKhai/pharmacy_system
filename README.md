@@ -62,22 +62,13 @@ npm install
 yarn install
 ```
 
-3. Cấu hình kết nối Backend
+3. Cấu hình URL kết nối Backend
 
-Vào file frontend/app/src/config/axios.ts
+Vào file frontend/app/.env
 
 ```ts
 // Đường dẫn máy chủ backend
-export const DOMAIN: string = "http://localhost:8000";
-
-const axiosClient = axios.create({
-  baseURL: DOMAIN, 
-  headers: {
-    "Content-Type": "application/json", 
-    Accept: "application/json",
-  },
-  timeout: 30000, 
-});
+VITE_API_URL=http://localhost:8000/api/v1/
 
 ```
 
