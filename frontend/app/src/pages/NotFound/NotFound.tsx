@@ -10,7 +10,7 @@ const NotFound: React.FC = () => {
         Đường dẫn bạn truy cập không tồn tại trong hệ thống quản lý nhà thuốc.
       </p>
       <Link
-        to="/api/v1/khach-hang"
+        to="/admin/khach-hang"
         className="bg-[#12B0C2] text-white px-6 py-2 rounded hover:bg-[#0e8a9b] transition"
       >
         Quay lại Trang Khách Hàng

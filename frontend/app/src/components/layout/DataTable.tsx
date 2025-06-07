@@ -10,13 +10,21 @@ type DataTableProps<T> = {
   data: T[];
   columns: Column<T>[];
   title?: string;
+  onRowClick?: (row: T) => void;
 };
 
 function DataTable<T extends object>({
   data,
   columns,
   title,
+  onRowClick,
 }: DataTableProps<T>) {
+  const handleRowClick = (row: T) => {
+    if (onRowClick) {
+      onRowClick(row); 
+    }
+  };
+
   return (
     <div>
       {title && <h2 className="font-bold text-2xl mb-5">{title}</h2>}
@@ -35,8 +43,8 @@ function DataTable<T extends object>({
               </tr>
             </thead>
             <tbody>
-              {data.map((row, idx) => (
-                <tr key={idx} className="hover:bg-gray-50">
+              {data.slice().reverse().map((row, idx) => (
+                <tr key={idx} className="hover:bg-gray-50" onClick={() => handleRowClick(row)}>
                   {columns.map((col) => (
                     <td key={String(col.key)} className="border border-gray-300 px-4 py-2">
                       {col.render

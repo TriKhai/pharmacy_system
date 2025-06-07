@@ -1,19 +1,23 @@
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { faUser, faPills, faFileInvoice, faChartBar, faFileExport, type IconDefinition } from "@fortawesome/free-solid-svg-icons";
+// import logo from "../../assets/logo.png";
 
 interface NavLink {
     path: string,
     label: string,
-    icon: string
+    icon: IconDefinition
 }
 
 const Sidebar:React.FC = () => {
 
     const navLinks: NavLink[] = [
-        { path: "/api/v1/khach-hang", label: "Khách hàng", icon: '+ '},
-        { path: "/api/v1/thuoc", label: "Thuốc", icon: '+ '},
-        { path: "/api/v1/hoa-don", label: "Hóa Đơn", icon: '+ '},
-        { path: "/api/v1/thong-ke", label: "Thống Kê", icon: '+ '},
-        { path: "/api/v1/xuat-file", label: "Xuất file", icon: '+ '},
+        { path: "/admin/khach-hang", label: "Khách hàng", icon: faUser},
+        { path: "/admin/thuoc", label: "Thuốc", icon: faPills},
+        { path: "/admin/hoa-don", label: "Hóa Đơn", icon: faFileInvoice},
+        { path: "/admin/thong-ke", label: "Thống Kê", icon: faChartBar},
+        { path: "/admin/xuat-file", label: "Xuất file", icon: faFileExport},
     ];
 
     // CSS variable
@@ -23,6 +27,14 @@ const Sidebar:React.FC = () => {
     return (
       <div className="h-screen w-[15vw] bg-gray-100 text-black flex flex-col justify-between">
         <div>
+          
+          <div className="py-2 px-2">
+            {/* <img src={logo} alt="" /> */}
+            <p className="text-xl font-bold text-center">Hệ Thống</p>
+            <p className="text-xl font-bold text-center">Quản Lý Nhà Thuốc</p>
+            
+          </div>
+          <hr />
           <div className="">
             {navLinks.map(({ path, label, icon }) => (
               <div className="text-xl " key={path}>
@@ -30,7 +42,7 @@ const Sidebar:React.FC = () => {
                   to={path}
                   className={getLinkClass}
                 >
-                  {icon}
+                  <FontAwesomeIcon icon={icon} className="mr-2" />
                   {label}
                 </NavLink>
               </div>

@@ -4,3 +4,9 @@ export interface KhachHangType {
     SoDienThoai: string,
     DiaChi?: string,
 }
+
+export interface KhachHangFormType {
+    TenKhachHang: string,
+    SoDienThoai: string,
+    DiaChi?: string,
+}
