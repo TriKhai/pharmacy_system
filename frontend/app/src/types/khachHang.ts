@@ -1,6 +1,6 @@
 export interface KhachHangType {
-    maKhachHang: string,
-    tenKhachHang: string,
-    soDienThoai: string,
-    diaChi?: string,
+    MaKhachHang: string,
+    TenKhachHang: string,
+    SoDienThoai: string,
+    DiaChi?: string,
 }

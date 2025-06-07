@@ -6,11 +6,18 @@ import DataTable, { type Column } from "../../components/layout/DataTable";
 
 const KhachHang: React.FC = () => {
     const [khachHangs, setKhachHangs] = useState<KhachHangType[]>([]);
+    const [formData, setFormData] = useState({
+      TenKhachHang: "",
+      SoDienThoai: "",
+      DiaChi: "",
+    });
 
     useEffect(() => {
       const fetchKhachHangs = async () => {
         try {
-          const response = await axiosClient.get<KhachHangType[]>('khach-hang');
+          const response = await axiosClient.get<KhachHangType[]>('user');
+          // console.log('API trả về:', response.data);
+
           setKhachHangs(response.data); 
         } catch (error) {
           console.error('Lỗi khi gọi API:', error);
@@ -20,33 +27,26 @@ const KhachHang: React.FC = () => {
       fetchKhachHangs();
     }, []);
 
-    // (Dữ liệu tĩnh)
-    // const khachHangs: KhachHangType[] = [
-    //   {
-    //     maKhachHang: 'KH001',
-    //     tenKhachHang: 'Nguyễn Văn A',
-    //     soDienThoai: '0901234567',
-    //     diaChi: '123 Đường Lê Lợi, Quận 1, TP.HCM',
-    //   },
-    //   {
-    //     maKhachHang: 'KH002',
-    //     tenKhachHang: 'Trần Thị B',
-    //     soDienThoai: '0912345678',
-    //     diaChi: '456 Đường Trần Hưng Đạo, Quận 5, TP.HCM',
-    //   },
-    //   {
-    //     maKhachHang: 'KH003',
-    //     tenKhachHang: 'Lê Văn C',
-    //     soDienThoai: '0987654321',
-    //     diaChi: '',
-    //   },
-    // ];
+    const addKhachHang = async () => {
+      try {
+        const response = await axiosClient.post<KhachHangType>('user/', formData);
+        setKhachHangs([...khachHangs, response.data]);
+        setFormData({
+          TenKhachHang: "",
+          SoDienThoai: "",
+          DiaChi: "",
+        });
+      } catch (error) {
+        console.error('Lỗi khi thêm khách hàng:', error);
+      }
+    }
+
 
     const columns: Column<KhachHangType>[] = [
-      { key: 'maKhachHang', label: 'Mã Khách Hàng' },
-      { key: 'tenKhachHang', label: 'Tên Khách Hàng' },
-      { key: 'soDienThoai', label: 'Số Điện Thoại' },
-      { key: 'diaChi', label: 'Địa Chỉ' },
+      // { key: 'MaKhachHang', label: 'Mã Khách Hàng' },
+      { key: 'TenKhachHang', label: 'Tên Khách Hàng' },
+      { key: 'SoDienThoai', label: 'Số Điện Thoại' },
+      { key: 'DiaChi', label: 'Địa Chỉ' },
     ];
 
     // CSS variable
@@ -68,28 +68,49 @@ const KhachHang: React.FC = () => {
 
             <div className="space-y-4 max-w-md">
               <div className="grid grid-cols-[120px_1fr] items-center gap-2">
-                <label htmlFor="maKhachHang" className="">Mã Khách Hàng:</label>
-                <input id="maKhachHang" type="text" className="border px-2 py-1 w-full" />
+                <label htmlFor="TenKhachHang">Tên Khách Hàng:</label>
+                <input
+                  id="TenKhachHang"
+                  type="text"
+                  className="border px-2 py-1 w-full"
+                  value={formData.TenKhachHang}
+                  onChange={(e) =>
+                    setFormData({ ...formData, TenKhachHang: e.target.value })
+                  }
+                />
               </div>
 
               <div className="grid grid-cols-[120px_1fr] items-center gap-2">
-                <label htmlFor="tenKhachHang" className="">Tên Khách Hàng:</label>
-                <input id="tenKhachHang" type="text" className="border px-2 py-1 w-full" />
+                <label htmlFor="SoDienThoai">Số Điện Thoại:</label>
+                <input
+                  id="SoDienThoai"
+                  type="text"
+                  className="border px-2 py-1 w-full"
+                  value={formData.SoDienThoai}
+                  onChange={(e) =>
+                    setFormData({ ...formData, SoDienThoai: e.target.value })
+                  }
+                />
               </div>
 
               <div className="grid grid-cols-[120px_1fr] items-center gap-2">
-                <label htmlFor="soDienThoai" className="">Số Điện Thoại:</label>
-                <input id="soDienThoai" type="text" className="border px-2 py-1 w-full" />
-              </div>
-
-              <div className="grid grid-cols-[120px_1fr] items-center gap-2">
-                <label htmlFor="diaChi" className="">Địa Chỉ:</label>
-                <input id="diaChi" type="text" className="border px-2 py-1 w-full" />
+                <label htmlFor="DiaChi">Địa Chỉ:</label>
+                <input
+                  id="DiaChi"
+                  type="text"
+                  className="border px-2 py-1 w-full"
+                  value={formData.DiaChi}
+                  onChange={(e) =>
+                    setFormData({ ...formData, DiaChi: e.target.value })
+                  }
+                />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-2 mt-4">
-              <button className={buttonClass}>Thêm khách hàng</button>
+              <button className={buttonClass} onClick={addKhachHang}>
+                Thêm khách hàng
+              </button>
               <button className={buttonClass}>Lưu</button>
               <button className={buttonClass}>Sửa</button>
               <button className={buttonClass}>Xóa</button>
