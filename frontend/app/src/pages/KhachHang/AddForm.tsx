@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 type Field<T> = {
   label: string;
@@ -51,7 +53,7 @@ const AddForm = <T extends object>({ title, fields, isOpen, onSubmit, onClose }:
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">{title}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-black">
-            ×
+            <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
 
