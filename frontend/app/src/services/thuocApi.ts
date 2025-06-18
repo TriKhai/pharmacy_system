@@ -3,13 +3,14 @@ import type { ThuocFormType, ThuocType } from "../types/thuoc";
 
 export const fetchThuocs = async ():Promise<ThuocType[]> => {
     try {
-        const res = await axiosClient.get<ThuocType []>('medicine'); 
-        return res.data;
+        const res = await axiosClient.get<APIResponse<ThuocType[]>>("medicine/");
+        if (!res.data.success) throw new Error(res.data.message);
+        return res.data.data || [];
     } catch (error) {
-        console.error('Lỗi khi gọi API:', error);
+        console.error("Lỗi khi lấy danh sách thuốc:", error);
         throw error;
     }
-}
+};
 
 export const createThuoc = async (form: ThuocFormType):Promise<ThuocType> => {
     try {
