@@ -14,3 +14,8 @@ python manage.py makemigrations
 ```bash
 python manage.py runserver
 ```
+
+4. Nạp dữ liệu vào db
+```bash
+python db_csv.py
+```
