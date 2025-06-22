@@ -1,11 +1,6 @@
 import axiosClient from "../config/axios";
 import type { NhaCungCapType, NhaCungCapFormType } from "../types/nhaCungCap";
-
-type APIResponse<T> = {
-    success: boolean;
-    message: string;
-    data?: T;
-};
+import type { APIResponse } from "../types/utils";
 
 export const fetchNhaCungCaps = async ():Promise<NhaCungCapType[]> => {
     try {

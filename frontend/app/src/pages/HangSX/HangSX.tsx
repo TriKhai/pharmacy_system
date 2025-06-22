@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { HangSXFormType, HangSXType } from "../../types/HangSX";
+import type { HangSXFormType, HangSXType } from "../../types/hangSX";
 import DataTable, { type Column } from "../../components/layout/DataTable";
 import { createHangSX, deleteHangSX, fetchHangSXs, updateHangSX } from "../../services/hangSXApi";
 import AddForm from "./AddForm";
@@ -132,6 +132,7 @@ const HangSX: React.FC = () => {
             columns={columns}
             title="Danh sách hãng sản xuất"
             onRowClick={handleRowClick}
+            selectedRow={HangSX}
           />
         </div>
 

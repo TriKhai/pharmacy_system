@@ -132,6 +132,7 @@ const NhaCungCap: React.FC = () => {
             columns={columns}
             title="Danh sách nhà cung cấp"
             onRowClick={handleRowClick}
+            selectedRow={nhaCungCap}
           />
         </div>
 
