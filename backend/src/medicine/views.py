@@ -21,7 +21,8 @@ class ThuocList(APIView):
         }, status=status.HTTP_200_OK)
         
     def post(self, request):
-        serializer = ThuocSerializer(data=request.data.get("data", {}))
+        serializer = ThuocSerializer(data=request.data)
+        
         if serializer.is_valid():
             serializer.save()
             return Response({
@@ -69,7 +70,7 @@ class ThuocDetail(APIView):
                 "message": "Không tìm thấy thuốc"
             }, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = self.get_serializer(thuoc, data=request.data.get("data", {}))
+        serializer = self.get_serializer(thuoc, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({

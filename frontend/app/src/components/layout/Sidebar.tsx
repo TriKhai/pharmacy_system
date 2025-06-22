@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { faUser, faPills, faFileInvoice, faChartBar, faFileExport, type IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faPills, faFileInvoice, faChartBar, faFileExport, faBoxes, faTruck, faFlask, type IconDefinition } from "@fortawesome/free-solid-svg-icons";
 // import logo from "../../assets/logo.png";
 
 interface NavLink {
@@ -12,14 +12,16 @@ interface NavLink {
 
 const Sidebar:React.FC = () => {
 
-    const navLinks: NavLink[] = [
-        { path: "/admin/khach-hang", label: "Khách hàng", icon: faUser},
-        { path: "/admin/thuoc", label: "Thuốc", icon: faPills},
-        { path : "admin/hangsx", label: "Hãng Sản Xuất", icon: faPills},
-        { path: "/admin/hoa-don", label: "Hóa Đơn", icon: faFileInvoice},
-        { path: "/admin/thong-ke", label: "Thống Kê", icon: faChartBar},
-        { path: "/admin/xuat-file", label: "Xuất file", icon: faFileExport},
-    ];
+  const navLinks: NavLink[] = [
+    { path: "/admin/khach-hang", label: "Khách hàng", icon: faUser },
+    { path: "/admin/thuoc", label: "Thuốc", icon: faPills },
+    { path: "/admin/loai-thuoc", label: "Loại Thuốc", icon: faBoxes },
+    { path: "/admin/nha-cung-cap", label: "Nhà Cung Cấp", icon: faTruck },
+    { path: "/admin/hangsx", label: "Hãng Sản Xuất", icon: faFlask },
+    { path: "/admin/hoa-don", label: "Hóa Đơn", icon: faFileInvoice },
+    { path: "/admin/thong-ke", label: "Thống Kê", icon: faChartBar },
+    { path: "/admin/xuat-file", label: "Xuất file", icon: faFileExport },
+  ];
 
     // CSS variable
     const getLinkClass = ({ isActive }: { isActive: boolean }) =>

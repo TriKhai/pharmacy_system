@@ -42,7 +42,7 @@ class LoaiThuocDetail(APIView):
 
     def get_object(self, maLT):
         try:
-            return LoaiThuocModel.objects.get(MaLoaiThuoc=maLT)
+            return LoaiThuocModel.objects.get(MaLoai=maLT)
         except LoaiThuocModel.DoesNotExist:
             return None
 

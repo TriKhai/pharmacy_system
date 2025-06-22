@@ -42,7 +42,7 @@ class NhaCungCapDetail(APIView):
 
     def get_object(self, maNCC):
         try:
-            return NhaCungCapModel.objects.get(MaNhaCungCap=maNCC)
+            return NhaCungCapModel.objects.get(MaNCC=maNCC)
         except NhaCungCapModel.DoesNotExist:
             return None
 

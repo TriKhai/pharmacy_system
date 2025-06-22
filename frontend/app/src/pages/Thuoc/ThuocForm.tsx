@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import type { ThuocFormType } from '../../types/thuoc';
 import type { NhaCungCapType } from '../../types/nhaCungCap';
-import type { HangSXType } from '../../types/hangSX';
+import type { HangSXType } from '../../types/HangSX';
 import type { LoaiThuocType } from '../../types/loaiThuoc';
 import { fetchHangSXs } from '../../services/hangSXApi';
-import { fetchNCC } from '../../services/nhaCungCapApi';
-import { fetchLoaiThuoc } from '../../services/loaiThuocApi';
+import { fetchNhaCungCaps } from '../../services/nhaCungCapApi';
+import { fetchLoaiThuocs } from '../../services/loaiThuocApi';
 
 type Props = {
   title: string;
@@ -38,8 +38,8 @@ const ThuocForm: React.FC<Props> = ({ title, isOpen, onSubmit, onClose }) => {
         const getData = async () => {
             try {
                 const dataHangSX = await fetchHangSXs();
-                const dataNCC = await fetchNCC();
-                const dataLoai = await fetchLoaiThuoc();
+                const dataNCC = await fetchNhaCungCaps();
+                const dataLoai = await fetchLoaiThuocs();
                 setNhaCungCaps(dataNCC); 
                 setHangSXs(dataHangSX); 
                 setLoais(dataLoai); 
