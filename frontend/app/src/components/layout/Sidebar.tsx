@@ -15,6 +15,8 @@ const Sidebar:React.FC = () => {
     const navLinks: NavLink[] = [
         { path: "/admin/khach-hang", label: "Khách hàng", icon: faUser},
         { path: "/admin/thuoc", label: "Thuốc", icon: faPills},
+        { path: "/admin/loai-thuoc", label: "Loại Thuốc", icon: faPills},
+        { path: "/admin/nha-cung-cap", label: "Nhà Cung Cấp", icon: faPills},
         { path : "admin/hangsx", label: "Hãng Sản Xuất", icon: faPills},
         { path: "/admin/hoa-don", label: "Hóa Đơn", icon: faFileInvoice},
         { path: "/admin/thong-ke", label: "Thống Kê", icon: faChartBar},

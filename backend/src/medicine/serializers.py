@@ -48,6 +48,7 @@ class ThuocSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['MaThuoc']
         depth = 1
+        
 
     def validate_TenThuoc(self, value):
         if not value.strip():

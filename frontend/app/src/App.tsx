@@ -5,6 +5,8 @@ import MainLayout from './components/layout/MainLayout';
 import KhachHang from './pages/KhachHang/KhachHang';
 import DangNhap from './pages/DangNhap/DangNhap';
 import HangSX from './pages/HangSX/HangSX';
+import LoaiThuoc from './pages/LoaiThuoc/LoaiThuoc';
+import NhaCungCap from './pages/NhaCC/NhaCC';
 
 import "./icon"
 import Thuoc from './pages/Thuoc/Thuoc';
@@ -22,6 +24,8 @@ function App() {
             <Route path="/admin/khach-hang" element={<KhachHang />} />
             <Route path="/admin/thuoc" element={<Thuoc />} />
             <Route path="/admin/hangsx" element={<HangSX />} />
+            <Route path="/admin/loai-thuoc" element={<LoaiThuoc />} />
+            <Route path="/admin/nha-cung-cap" element={<NhaCungCap />} />
           </Route>
 
           <Route path="/admin/dang-nhap" element={<DangNhap />}/>

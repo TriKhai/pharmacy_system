@@ -3,11 +3,11 @@ import DataTable, { type Column } from "../../components/layout/DataTable";
 import type { ThuocFormType, ThuocType } from "../../types/thuoc";
 import { createThuoc, deleteThuoc, fetchThuocs, updateThuoc } from "../../services/thuocApi";
 import type { NhaCungCapType } from "../../types/nhaCungCap";
-import type { HangSXType } from "../../types/hangSX";
+import type { HangSXType } from "../../types/HangSX";
 import type { LoaiThuocType } from "../../types/loaiThuoc";
 import { fetchHangSXs } from "../../services/hangSXApi";
-import { fetchNCC } from "../../services/nhaCungCapApi";
-import { fetchLoaiThuoc } from "../../services/loaiThuocApi";
+import { fetchNhaCungCaps } from "../../services/nhaCungCapApi";
+import { fetchLoaiThuocs } from "../../services/loaiThuocApi";
 import ThuocForm from "./ThuocForm";
 
 
@@ -68,8 +68,8 @@ const Thuoc: React.FC = () => {
             try {
               const data = await fetchThuocs();
               const dataHangSX = await fetchHangSXs();
-              const dataNCC = await fetchNCC();
-              const dataLoai = await fetchLoaiThuoc();
+              const dataNCC = await fetchNhaCungCaps();
+              const dataLoai = await fetchLoaiThuocs();
               setThuocs(data); 
               setNhaCungCaps(dataNCC); 
               setHangSXs(dataHangSX); 
@@ -82,6 +82,7 @@ const Thuoc: React.FC = () => {
     }, []);
 
     const handleAdd = async (formData: ThuocFormType) => {
+      console.log(formData)
       try {
         console.log(formData)
         const newThuoc = await createThuoc(formData);

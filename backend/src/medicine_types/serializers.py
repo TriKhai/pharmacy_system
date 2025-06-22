@@ -16,7 +16,7 @@ class LoaiThuocSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Tên loại không được để trống.")
         return value
     
-    # "viên", "lọ", "ống", "chai", "hộp"
+    # "viên", "lọ", "ống", "chai", "hộp", "gói"
     def validate_DonViTinh(self, value):
         if not value.strip():
             raise serializers.ValidationError("Đơn vị tính không được để trống.")

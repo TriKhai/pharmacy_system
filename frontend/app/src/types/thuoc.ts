@@ -1,4 +1,4 @@
-import type { HangSXType } from "./hangSX";
+import type { HangSXType } from "./HangSX";
 import type { LoaiThuocType } from "./loaiThuoc";
 import type { NhaCungCapType } from "./nhaCungCap";
 

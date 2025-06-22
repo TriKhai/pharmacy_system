@@ -9,7 +9,7 @@ class LoaiThuocModel(models.Model):
         ONG = 'ống', 'Ống'
         CHAI = 'chai', 'Chai'
         HOP = 'hộp', 'Hộp'
-        Goi = 'gói', 'Gói'
+        GOI = 'gói', 'Gói'
 
     MaLoai = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False, unique=True)
     TenLoai = models.CharField(max_length=100, blank=True, null=False)

@@ -1,6 +1,12 @@
 import axiosClient from "../config/axios";
 import type { ThuocFormType, ThuocType } from "../types/thuoc";
 
+type APIResponse<T> = {
+    success: boolean;
+    message: string;
+    data?: T;
+};
+
 export const fetchThuocs = async ():Promise<ThuocType[]> => {
     try {
         const res = await axiosClient.get<APIResponse<ThuocType[]>>("medicine/");
@@ -12,30 +18,32 @@ export const fetchThuocs = async ():Promise<ThuocType[]> => {
     }
 };
 
-export const createThuoc = async (form: ThuocFormType):Promise<ThuocType> => {
+export const createThuoc = async (form: ThuocFormType): Promise<ThuocType> => {
     try {
-        const res = await axiosClient.post<ThuocType>('medicine/', form);
-        console.log("Response trả về: ", res.data)
-        return res.data;
+        const res = await axiosClient.post<APIResponse<ThuocType>>("medicine/", form);
+        console.log("Response trả về:", res.data);
+        if (!res.data.success) throw new Error(res.data.message);
+        return res.data.data!;
     } catch (error) {
-        console.error('Lỗi khi gọi API:', error);
+        console.error("Lỗi khi gọi API:", error);
         throw error;
     }
-}
+};
 
 export const updateThuoc = async (
-  MaThuoc: string,
-  form: ThuocFormType
+    MaThuoc: string,
+    form: ThuocFormType
 ): Promise<ThuocType> => {
-  try {
-    const res = await axiosClient.put<ThuocType>(`medicine/${MaThuoc}/`, form);
-    // console.log("Response trả về: ", res.data);
-    return res.data;
-  } catch (error) {
-    console.error("Lỗi khi gọi API:", error);
-    throw error;
-  }
+    try {
+        const res = await axiosClient.put<APIResponse<ThuocType>>(`medicine/${MaThuoc}/`, form);
+        if (!res.data.success) throw new Error(res.data.message);
+        return res.data.data!;
+    } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+        throw error;
+    }
 };
+
 
 export const deleteThuoc = async (MaThuoc: string):Promise<string> => {
     try {
