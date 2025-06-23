@@ -1,11 +1,6 @@
 import axiosClient from "../config/axios";
 import type { KhachHangFormType, KhachHangType } from "../types/khachHang";
-
-type APIResponse<T> = {
-  success: boolean;
-  message: string;
-  data?: T;
-};
+import type { APIResponse } from "../types/utils";
 
 export const fetchKhachHangs = async (): Promise<KhachHangType[]> => {
   try {

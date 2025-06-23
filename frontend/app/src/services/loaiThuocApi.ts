@@ -1,11 +1,6 @@
 import axiosClient from "../config/axios";
 import type { LoaiThuocType, LoaiThuocFormType } from "../types/loaiThuoc";
-
-type APIResponse<T> = {
-    success: boolean;
-    message: string;
-    data?: T;
-};
+import type { APIResponse } from "../types/utils";
 
 export const fetchLoaiThuocs = async ():Promise<LoaiThuocType[]> => {
     try {

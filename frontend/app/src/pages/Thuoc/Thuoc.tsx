@@ -3,7 +3,7 @@ import DataTable, { type Column } from "../../components/layout/DataTable";
 import type { ThuocFormType, ThuocType } from "../../types/thuoc";
 import { createThuoc, deleteThuoc, fetchThuocs, updateThuoc } from "../../services/thuocApi";
 import type { NhaCungCapType } from "../../types/nhaCungCap";
-import type { HangSXType } from "../../types/HangSX";
+import type { HangSXType } from "../../types/hangSX";
 import type { LoaiThuocType } from "../../types/loaiThuoc";
 import { fetchHangSXs } from "../../services/hangSXApi";
 import { fetchNhaCungCaps } from "../../services/nhaCungCapApi";
@@ -417,10 +417,11 @@ const Thuoc: React.FC = () => {
             columns={columns}
             title={title}
             onRowClick={handleRowClick}
+            selectedRow={thuoc}
           />
         </div>
 
-        <div className="col-span-1 flex flex-col gap-4">
+        <div className="col-span-1 flex flex-col gap-4 max-h-[97vh] overflow-y-auto">
           <div className="p-4 shadow rounded">
             <h3 className="font-semibold mb-4">Thông tin thuốc</h3>
 

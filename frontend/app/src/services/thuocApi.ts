@@ -1,11 +1,6 @@
 import axiosClient from "../config/axios";
 import type { ThuocFormType, ThuocType } from "../types/thuoc";
-
-type APIResponse<T> = {
-    success: boolean;
-    message: string;
-    data?: T;
-};
+import type { APIResponse } from "../types/utils";
 
 export const fetchThuocs = async ():Promise<ThuocType[]> => {
     try {

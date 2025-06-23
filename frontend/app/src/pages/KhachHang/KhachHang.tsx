@@ -133,6 +133,7 @@ const KhachHang: React.FC = () => {
             columns={columns}
             title="Danh sách khách hàng"
             onRowClick={handleRowClick}
+            selectedRow={khachHang}
           />
         </div>
 

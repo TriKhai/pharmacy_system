@@ -132,6 +132,7 @@ const LoaiThuoc: React.FC = () => {
             columns={columns}
             title="Danh sách loại thuốc"
             onRowClick={handleRowClick}
+            selectedRow={loaiThuoc}
           />
         </div>
 

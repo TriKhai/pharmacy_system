@@ -1,11 +1,6 @@
 import axiosClient from "../config/axios";
-import type { HangSXFormType, HangSXType } from "../types/HangSX";
-
-type APIResponse<T> = {
-  success: boolean;
-  message: string;
-  data?: T;
-};
+import type { HangSXFormType, HangSXType } from "../types/hangSX";
+import type { APIResponse } from "../types/utils";
 
 export const fetchHangSXs = async (): Promise<HangSXType[]> => {
   try {
