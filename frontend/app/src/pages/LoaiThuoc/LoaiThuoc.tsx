@@ -166,7 +166,7 @@ const LoaiThuoc: React.FC = () => {
           </div>
 
           <div className="p-4 shadow rounded">
-            <h3 className="font-semibold mb-4">Tìm Kiếm Khách Hàng</h3>
+            <h3 className="font-semibold mb-4">Tìm Kiếm Loại Thuốc</h3>
             <div className="grid grid-cols-[120px_1fr] items-center gap-2">
               <label htmlFor="searchTerm" className="">Tên loại thuốc:</label>
               <input
