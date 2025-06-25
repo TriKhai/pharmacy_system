@@ -9,8 +9,10 @@ const KhachHang: React.FC = () => {
     const [khachHangs, setKhachHangs] = useState<KhachHangType[]>([]);
     const [khachHang, setKhachHang] = useState<KhachHangType | null>(null);
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
-    const [searchTerm, setSearchTerm] = useState<string>("");
+    // const [searchTerm, setSearchTerm] = useState<string>("");
+    const [query, setQuery] = useState("");
 
+    
     const columns: Column<KhachHangType>[] = [
       { key: 'TenKhachHang', label: 'Tên Khách Hàng' },
       { key: 'SoDienThoai', label: 'Số Điện Thoại' },
@@ -93,24 +95,24 @@ const KhachHang: React.FC = () => {
       setKhachHang(null)
     }
 
-    const handleSearch = async () => {
-      try {
-        const data = await fetchKhachHangs();
-        const filteredData = data.filter((kh) =>
-          kh.TenKhachHang.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setKhachHangs(filteredData);
-      } catch (error) {
-        console.error("Lỗi khi tìm kiếm:", error);
-        alert("Không thể tìm kiếm khách hàng!");
-      }
-    }
+    // const handleSearch = async () => {
+    //   try {
+    //     const data = await fetchKhachHangs();
+    //     const filteredData = data.filter((kh) =>
+    //       kh.TenKhachHang.toLowerCase().includes(searchTerm.toLowerCase())
+    //     );
+    //     setKhachHangs(filteredData);
+    //   } catch (error) {
+    //     console.error("Lỗi khi tìm kiếm:", error);
+    //     alert("Không thể tìm kiếm khách hàng!");
+    //   }
+    // }
 
-    const handelCancelSerch = async () => {
-      const data = await fetchKhachHangs()
-      setKhachHangs(data)
-      setSearchTerm("")
-    }
+    // const handelCancelSerch = async () => {
+    //   const data = await fetchKhachHangs()
+    //   setKhachHangs(data)
+    //   setSearchTerm("")
+    // }
 
     const handleClose = () => {
       setIsOpenModal(false);
@@ -124,12 +126,19 @@ const KhachHang: React.FC = () => {
       const { id, value } = e.target;
       setKhachHang((prev) => prev ? { ...prev, [id]: value } : null);
     };
+
+    const filterData: KhachHangType[] =
+      query.length > 0
+        ? khachHangs.filter((kh: KhachHangType) => {
+            return kh.TenKhachHang.toLowerCase().includes(query.toLowerCase());
+          })
+        : khachHangs;
     
     return (
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2">
           <DataTable<KhachHangType>
-            data={khachHangs}
+            data={filterData}
             columns={columns}
             title="Danh sách khách hàng"
             onRowClick={handleRowClick}
@@ -175,18 +184,21 @@ const KhachHang: React.FC = () => {
                 id="searchTerm"
                 type="text"
                 className="border px-2 py-1 w-full" 
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                // value={searchTerm}
+                // onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setQuery(e.target.value)
+                }
               />
             </div>
-            <div className="grid grid-cols-2 gap-2 mt-4">
+            {/* <div className="grid grid-cols-2 gap-2 mt-4">
               <button className={buttonClass} onClick={handleSearch}>
                 Tìm kiếm
               </button>
               <button className={buttonClass} onClick={handelCancelSerch}>
                 Hủy tìm kiếm
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
 
