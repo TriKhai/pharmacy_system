@@ -3,8 +3,6 @@ import django
 import csv
 import sys
 import random
-from datetime import datetime
-from decimal import Decimal
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.src.app.settings")  
@@ -53,12 +51,10 @@ def load_thuoc():
         reader = csv.DictReader(f)
         for row in reader:
             try:
-                # Tra cứu UUID dựa trên tên
                 loai = LoaiThuocModel.objects.get(TenLoai=row['MaLoai'])
                 hangsx = HangSXModel.objects.get(TenHangSX=row['MaHangSX'])
                 ncc = NhaCungCapModel.objects.get(TenNCC=row['MaNCC'])
 
-                # Gán UUID vào row
                 row['MaLoai'] = str(loai.MaLoai)
                 row['MaHangSX'] = str(hangsx.MaHangSX)
                 row['MaNCC'] = str(ncc.MaNCC)
@@ -142,4 +138,5 @@ if __name__ == '__main__':
     load_khach_hang()
     load_hoa_don()
     load_chi_tiet_hd()
+    
     print("Đã thêm dữ liệu từ các file CSV.")

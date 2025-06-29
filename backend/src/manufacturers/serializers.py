@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import HangSXModel
-import re
 
 class HangSXSerializer(serializers.ModelSerializer):
     MaHangSX = serializers.CharField(read_only=True)

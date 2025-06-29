@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import LoaiThuocModel
-import re
 
 class LoaiThuocSerializer(serializers.ModelSerializer):
     MaLoai = serializers.CharField(read_only=True)

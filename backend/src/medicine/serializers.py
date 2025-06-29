@@ -1,12 +1,8 @@
 from rest_framework import serializers
 from .models import ThuocModel
-import re
-from medicine_types.models import LoaiThuocModel
-from medicine_types.serializers import LoaiThuocSerializer
-from manufacturers.models import HangSXModel
-from manufacturers.serializers import HangSXSerializer
-from suppliers.models import NhaCungCapModel
-from suppliers.serializers import NhaCungCapSerializer
+from medicine_types.serializers import LoaiThuocSerializer, LoaiThuocModel
+from manufacturers.serializers import HangSXSerializer, HangSXModel
+from suppliers.serializers import NhaCungCapSerializer, NhaCungCapModel
 
 
 class ThuocSerializer(serializers.ModelSerializer):

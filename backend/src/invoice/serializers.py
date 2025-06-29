@@ -1,11 +1,9 @@
 from rest_framework import serializers
-from .models import HoaDonModel, ChiTietHoaDonModel
 from datetime import date
 from django.db.models import Sum, F, DecimalField, ExpressionWrapper
-from users.models import KhachHangModel
-from medicine.models import ThuocModel
-from medicine.serializers import ThuocSerializer 
-from users.serializers import KhachHangSerializer
+from .models import HoaDonModel, ChiTietHoaDonModel
+from medicine.serializers import ThuocSerializer, ThuocModel
+from users.serializers import KhachHangSerializer, KhachHangModel
 
 class ChiTietHoaDonSerializer(serializers.ModelSerializer):
     MaChiTietHD = serializers.CharField(read_only=True)

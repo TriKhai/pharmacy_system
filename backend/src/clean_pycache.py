@@ -17,5 +17,5 @@ def remove_pycache_dirs(start_path='.'):
     else:
         print(f"Đã xóa tổng cộng {count} thư mục __pycache__.")
 
-# Gọi hàm
-remove_pycache_dirs()
+if __name__ == '__main__':
+    remove_pycache_dirs()
