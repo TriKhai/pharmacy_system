@@ -32,20 +32,20 @@ const HoaDon: React.FC = () => {
 
     const columns: Column<HoaDonType>[] = [
         {
-            key: "MaKH",
+            key: "KhachHang",
             label: "Tên KH",
             render: (_, record) => (
                 <div
                     onClick={() => {
-                        setKhachHang(record.MaKH ?? null);
+                        setKhachHang(record.KhachHang ?? null);
                         setShowKhachHangModal(true);
                     }}
                     className="text-blue-600 cursor-pointer relative group"
                 >
-                    {record.MaKH?.TenKhachHang ?? "N/A"}
+                    {record.KhachHang?.TenKhachHang ?? "N/A"}
                     <div className="absolute z-10 hidden group-hover:block bg-white border shadow p-2 text-xs w-64 left-1/2 -translate-x-1/2 top-full mt-1">
-                        <p><strong>SĐT:</strong> {record.MaKH?.SoDienThoai}</p>
-                        <p><strong>Địa chỉ:</strong> {record.MaKH?.DiaChi}</p>
+                        <p><strong>SĐT:</strong> {record.KhachHang?.SoDienThoai}</p>
+                        <p><strong>Địa chỉ:</strong> {record.KhachHang?.DiaChi}</p>
                     </div>
                 </div>
             ),

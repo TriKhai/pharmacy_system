@@ -10,14 +10,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.src.app.settings")  
 django.setup()
 
-from users.serializers import KhachHangSerializer
-from manufacturers.serializers import HangSXSerializer
-from medicine_types.serializers import LoaiThuocSerializer
-from suppliers.serializers import NhaCungCapSerializer
-from medicine.models import ThuocModel
-from manufacturers.models import HangSXModel
-from medicine_types.models import LoaiThuocModel
-from suppliers.models import NhaCungCapModel
+from users.serializers import KhachHangSerializer, KhachHangModel
+from manufacturers.serializers import HangSXSerializer, HangSXModel
+from medicine_types.serializers import LoaiThuocSerializer, LoaiThuocModel
+from suppliers.serializers import NhaCungCapSerializer, NhaCungCapModel
+from medicine.serializers import ThuocSerializer, ThuocModel
+from invoice.serializers import HoaDonSerializer, ChiTietHoaDonSerializer, HoaDonModel, ChiTietHoaDonModel
+from medicine.serializers import ThuocModel, ThuocSerializer
 
 def load_loai_thuoc():
     with open(os.path.join("./data", 'loai_thuoc.csv'), 'r', encoding='utf-8') as f:
@@ -50,31 +49,28 @@ def load_nha_cung_cap():
                 print("NCC:", s.errors)
 
 def load_thuoc():
-    loai_list = list(LoaiThuocModel.objects.all())
-    hangsx_list = list(HangSXModel.objects.all())
-    ncc_list = list(NhaCungCapModel.objects.all())
-
-    if not (loai_list and hangsx_list and ncc_list):
-        print("Thiếu dữ liệu ở bảng LoaiThuoc, HangSX hoặc NhaCungCap!")
-        return
-
     with open(os.path.join("./data", 'thuoc.csv'), 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
             try:
-                thuoc = ThuocModel(
-                    MaLoai=random.choice(loai_list),
-                    MaHangSX=random.choice(hangsx_list),
-                    MaNCC=random.choice(ncc_list),
-                    TenThuoc=row['TenThuoc'],
-                    CongDung=row['CongDung'],
-                    DonGia=Decimal(row['DonGia']),
-                    SoLuongTonKho=int(row['SoLuongTonKho']),
-                    HanSuDung=datetime.strptime(row['HanSuDung'], "%Y-%m-%d").date()
-                )
-                thuoc.save()
+                # Tra cứu UUID dựa trên tên
+                loai = LoaiThuocModel.objects.get(TenLoai=row['MaLoai'])
+                hangsx = HangSXModel.objects.get(TenHangSX=row['MaHangSX'])
+                ncc = NhaCungCapModel.objects.get(TenNCC=row['MaNCC'])
+
+                # Gán UUID vào row
+                row['MaLoai'] = str(loai.MaLoai)
+                row['MaHangSX'] = str(hangsx.MaHangSX)
+                row['MaNCC'] = str(ncc.MaNCC)
+
+                s = ThuocSerializer(data=row)
+                if s.is_valid():
+                    s.save()
+                else:
+                    print("Thuoc:", s.errors)
             except Exception as e:
-                print("Lỗi tạo thuốc:", e)
+                print("Lỗi khi xử lý dòng:", row)
+                print("Chi tiết:", str(e))
                 
 def load_khach_hang():
     with open(os.path.join("./data", 'khach_hang.csv'), 'r', encoding='utf-8') as f:
@@ -86,10 +82,64 @@ def load_khach_hang():
             else:
                 print("Khách hàng:", s.errors)
 
+def load_hoa_don():
+    with open(os.path.join("./data", 'hoa_don.csv'), 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            try:
+                khach = KhachHangModel.objects.get(TenKhachHang=row['MaKH'])  
+                row['MaKH'] = khach.MaKhachHang
+                s = HoaDonSerializer(data=row)
+                if s.is_valid():
+                    s.save()
+                else:
+                    print("Hóa đơn lỗi:", s.errors)
+            except Exception as e:
+                print("Hóa đơn: ", e)
+
+def load_chi_tiet_hd():
+    with open(os.path.join("./data", 'chi_tiet_hoa_don.csv'), 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        hd_list = list(HoaDonModel.objects.all())
+        thuoc_list = list(ThuocModel.objects.all())
+
+        if not hd_list or not thuoc_list:
+            print("Danh sách Hóa đơn hoặc Thuốc rỗng!")
+            return
+
+        for row in reader:
+            try:
+                data = {
+                    'MaHoaDon': random.choice(hd_list).MaHoaDon,
+                    'MaThuoc': random.choice(thuoc_list).MaThuoc,
+                    'SoLuongBan': row['SoLuongBan'],
+                    'GiaBan': row['GiaBan']
+                }
+                s = ChiTietHoaDonSerializer(data=data)
+                if s.is_valid():
+                    s.save()
+                else:
+                    print("Lỗi chi tiết hóa đơn:", s.errors)
+            except Exception as e:
+                print("Chi tiết hóa đơn - lỗi exception:", e)
+                
+                                   
 if __name__ == '__main__':
+    print("Đang xóa dữ liệu cũ...")
+    ThuocModel.objects.all().delete()
+    KhachHangModel.objects.all().delete()
+    HangSXModel.objects.all().delete()
+    LoaiThuocModel.objects.all().delete()
+    NhaCungCapModel.objects.all().delete()
+    HoaDonModel.objects.all().delete()
+    ChiTietHoaDonModel.objects.all().delete()
+
+    print("Đang thêm dữ liệu mới...")
     load_loai_thuoc()
     load_hang_sx()
     load_nha_cung_cap()
     load_thuoc()
     load_khach_hang()
+    load_hoa_don()
+    load_chi_tiet_hd()
     print("Đã thêm dữ liệu từ các file CSV.")

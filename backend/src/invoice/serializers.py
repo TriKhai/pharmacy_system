@@ -49,7 +49,9 @@ class ChiTietHoaDonSerializer(serializers.ModelSerializer):
 
 class HoaDonSerializer(serializers.ModelSerializer):
     MaHoaDon = serializers.CharField(read_only=True)
-    MaKH = KhachHangSerializer(read_only=True) 
+    MaKH = serializers.PrimaryKeyRelatedField(
+        queryset=KhachHangModel.objects.all()
+    )
     NgayLap = serializers.DateField()
     TongTien = serializers.DecimalField(
         max_digits=12, decimal_places=2, read_only=True
@@ -57,10 +59,11 @@ class HoaDonSerializer(serializers.ModelSerializer):
 
     # Nested danh sách chi tiết hóa đơn
     ChiTiet = ChiTietHoaDonSerializer(source='chitiethoadon', many=True, read_only=True)
-
+    KhachHang = KhachHangSerializer(source='MaKH', read_only=True)
+    
     class Meta:
         model = HoaDonModel
-        fields = ['MaHoaDon', 'MaKH', 'NgayLap', 'TongTien', 'ChiTiet']
+        fields = ['MaHoaDon', 'MaKH', 'NgayLap', 'TongTien', 'KhachHang', 'ChiTiet']
 
     def validate_NgayLap(self, value):
         if value > date.today():

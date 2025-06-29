@@ -2,9 +2,10 @@ import type { ThuocType } from "./thuoc";
 import type { KhachHangType } from "./khachHang"
 export interface HoaDonType {
     MaHoaDon: string;
-    MaKH?: KhachHangType;
+    MaKH: string;
     NgayLap: string; // định dạng yyyy-mm-dd
     TongTien: number;
+    KhachHang?: KhachHangType;
     ChiTiet?: ChiTietHoaDonType[]; // optional nếu bạn cần nested
 }
 
