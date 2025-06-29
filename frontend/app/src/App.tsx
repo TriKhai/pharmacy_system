@@ -7,6 +7,7 @@ import DangNhap from './pages/DangNhap/DangNhap';
 import HangSX from './pages/HangSX/HangSX';
 import LoaiThuoc from './pages/LoaiThuoc/LoaiThuoc';
 import NhaCungCap from './pages/NhaCC/NhaCC';
+import HoaDon from './pages/HoaDon/HoaDon';
 
 import "./icon"
 import Thuoc from './pages/Thuoc/Thuoc';
@@ -28,6 +29,7 @@ function App() {
             <Route path="/admin/loai-thuoc" element={<LoaiThuoc />} />
             <Route path="/admin/nha-cung-cap" element={<NhaCungCap />} />
             <Route path="/admin/thong-ke" element={<ThongKe />} />
+            <Route path="/admin/hoa-don" element={<HoaDon />}></Route>
           </Route>
 
           <Route path="/admin/dang-nhap" element={<DangNhap />}/>

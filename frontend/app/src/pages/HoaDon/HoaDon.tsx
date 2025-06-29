@@ -1,0 +1,125 @@
+import React, { useEffect, useState } from "react";
+import DataTable, { type Column } from "../../components/layout/DataTable";
+import { fetchHoaDons } from "../../services/hoaDonApi";
+import type { HoaDonType } from "../../types/hoaDon";
+import type { KhachHangType } from "../../types/khachHang";
+import { formatCurrency } from "../../types/utils";
+
+const HoaDon: React.FC = () => {
+    const [hoaDons, setHoaDons] = useState<HoaDonType[]>([]);
+    const [selectedHoaDon, setSelectedHoaDon] = useState<HoaDonType | null>(null);
+    const [showKhachHangModal, setShowKhachHangModal] = useState(false);
+    const [khachHang, setKhachHang] = useState<KhachHangType | null>(null);
+    const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                const data = await fetchHoaDons();
+                setHoaDons(data);
+            } catch (error) {
+                console.error("Lỗi khi lấy danh sách hóa đơn:", error);
+            }
+        };
+
+        getData();
+    }, []);
+
+    const handleRowClick = (row: HoaDonType) => {
+        setSelectedHoaDon(row);
+    };
+
+    const columns: Column<HoaDonType>[] = [
+        {
+            key: "MaKH",
+            label: "Tên KH",
+            render: (_, record) => (
+                <div
+                    onClick={() => {
+                        setKhachHang(record.MaKH ?? null);
+                        setShowKhachHangModal(true);
+                    }}
+                    className="text-blue-600 cursor-pointer relative group"
+                >
+                    {record.MaKH?.TenKhachHang ?? "N/A"}
+                    <div className="absolute z-10 hidden group-hover:block bg-white border shadow p-2 text-xs w-64 left-1/2 -translate-x-1/2 top-full mt-1">
+                        <p><strong>SĐT:</strong> {record.MaKH?.SoDienThoai}</p>
+                        <p><strong>Địa chỉ:</strong> {record.MaKH?.DiaChi}</p>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            key: "NgayLap",
+            label: "Ngày lập",
+            render: (_, record) => new Date(record.NgayLap).toLocaleDateString("vi-VN"),
+        },
+        {
+            key: "TongTien",
+            label: "Tổng tiền",
+            render: (_, record) => formatCurrency(record.TongTien),
+        },
+        {
+            key: "ChiTiet",
+            label: "Chi tiết",
+            render: (_, record) => (
+                <button
+                    onClick={() => handleRowClick(record)}
+                    className="text-sm text-blue-500 hover:underline"
+                >
+                    Xem chi tiết
+                </button>
+            ),
+        },
+    ];
+
+    return (
+        <div className="grid grid-cols-3 gap-4">
+            {/* Danh sách hóa đơn ở giữa */}
+            <div className="col-span-2">
+                <DataTable<HoaDonType>
+                    data={hoaDons}
+                    columns={columns}
+                    title="Danh sách hóa đơn"
+                    onRowClick={handleRowClick}
+                    selectedRow={selectedHoaDon}
+                />
+            </div>
+
+            {/* Chi tiết hóa đơn ở bên phải */}
+            <div className="col-span-1 p-4 border rounded shadow overflow-y-auto max-h-[95vh]">
+                <h3 className="text-lg font-semibold mb-4">Chi tiết hóa đơn</h3>
+                {selectedHoaDon?.ChiTiet?.length ? (
+                    <table className="table-auto w-full border">
+                        <thead>
+                            <tr className="bg-gray-100">
+                                <th className="border px-2 py-1 text-left">Tên thuốc</th>
+                                <th className="border px-2 py-1 text-right">Số lượng</th>
+                                <th className="border px-2 py-1 text-right">Giá bán</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {selectedHoaDon.ChiTiet.map((item, index) => (
+                                <tr key={index}>
+                                    <td className="border px-2 py-1">{item.Thuoc?.TenThuoc ?? 'N/A'}</td>
+                                    <td className="border px-2 py-1 text-right">{item.SoLuongBan}</td>
+                                    <td className="border px-2 py-1 text-right">{formatCurrency(item.GiaBan)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>Chọn hóa đơn để xem chi tiết.</p>
+                )}
+            </div>
+
+
+            {/* Modal Thông tin khách hàng */}
+
+
+        </div>
+    );
+};
+
+export default HoaDon;

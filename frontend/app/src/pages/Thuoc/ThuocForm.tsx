@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import type { ThuocFormType } from '../../types/thuoc';
 import type { NhaCungCapType } from '../../types/nhaCungCap';
-import type { HangSXType } from '../../types/HangSX';
+import type { HangSXType } from '../../types/hangSX';
 import type { LoaiThuocType } from '../../types/loaiThuoc';
 import { fetchHangSXs } from '../../services/hangSXApi';
 import { fetchNhaCungCaps } from '../../services/nhaCungCapApi';
