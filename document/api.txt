@@ -109,3 +109,4 @@ DELETE: /api/v1/user/<str:maKH>/
     {
         "message": "Không tìm thấy khách hàng"
     }
+

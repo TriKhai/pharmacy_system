@@ -17,51 +17,7 @@ interface RevenueItem {
   invoices?: number; // Số hóa đơn (nếu cần)
 }
 
-// GET /api/v1/revenue/year?year=2025
-// const mockMonthData: Record<number, RevenueItem[]> = {
-//   2025: [
-//     { label: '01/2025', total: 22000000 },
-//     { label: '02/2025', total: 19000000 },
-//     { label: '03/2025', total: 25000000 },
-//     { label: '04/2025', total: 30000000 },
-//     { label: '05/2025', total: 30000000 },
-//     { label: '06/2025', total: 30000000 },
-//     { label: '07/2025', total: 30000000 },
-//     { label: '08/2025', total: 30000000 },
-//     { label: '09/2025', total: 27000000 },
-//     { label: '10/2025', total: 31000000 },
-//     { label: '11/2025', total: 31000000 },
-//     { label: '12/2025', total: 31000000 },
-//   ],
-// };
-
-// GET /api/v1/revenue/month?year=2025&month=6
-// const mockDayData: Record<number, Record<number, RevenueItem[]>> = {
-//   2025: {
-//     6: [
-//       { label: '1', total: 1000000 },
-//       { label: '2', total: 1500000 },
-//       { label: '3', total: 1200000 },
-//       { label: '4', total: 1300000 },
-//       { label: '5', total: 900000 },
-//       { label: '6', total: 1100000 },
-//     ]
-//   }
-// };
-
-// GET /api/v1/revenue/week?start=2025-06-01
-// const mockWeekData: Record<string, RevenueItem[]> = {
-//   '2025-06-01': [
-//     { label: 'Thứ 2', total: 4200000 },
-//     { label: 'Thứ 3', total: 5000000 },
-//     { label: 'Thứ 4', total: 4800000 },
-//     { label: 'Thứ 5', total: 4700000 },
-//     { label: 'Thứ 6', total: 4600000 },
-//     { label: 'Thứ 7', total: 4500000 },
-//     { label: 'Chủ nhật', total: 4400000 },
-//   ],
-// };
-
+// GET /api/v1/revenue/year?year=2025 -> Trả về 12 tháng gồm doanh thu và số hóa đơn mỗi tháng
 const mockMonthData: Record<number, RevenueItem[]> = {
   2025: [
     { label: '01/2025', total: 23484738, invoices: 13 },
@@ -93,7 +49,7 @@ const mockMonthData: Record<number, RevenueItem[]> = {
   ]
 };
 
-
+// GET /api/v1/revenue/month?year=2025&month=6
 const mockDayData: Record<number, Record<number, RevenueItem[]>> = {
   2025: {
     12: Array.from({ length: 30 }, (_, i) => ({
@@ -166,6 +122,7 @@ const mockDayData: Record<number, Record<number, RevenueItem[]>> = {
   }
 };
 
+// GET /api/v1/revenue/week?start=2025-06-01
 const mockWeekData: Record<string, RevenueItem[]> = {
   '2025-06-01': [
     { label: 'Thứ 2', total: 4200000, invoices: 22 },
