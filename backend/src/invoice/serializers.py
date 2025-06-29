@@ -5,6 +5,7 @@ from django.db.models import Sum, F, DecimalField, ExpressionWrapper
 from users.models import KhachHangModel
 from medicine.models import ThuocModel
 from medicine.serializers import ThuocSerializer 
+from users.serializers import KhachHangSerializer
 
 class ChiTietHoaDonSerializer(serializers.ModelSerializer):
     MaChiTietHD = serializers.CharField(read_only=True)
@@ -48,9 +49,7 @@ class ChiTietHoaDonSerializer(serializers.ModelSerializer):
 
 class HoaDonSerializer(serializers.ModelSerializer):
     MaHoaDon = serializers.CharField(read_only=True)
-    MaKH = serializers.PrimaryKeyRelatedField(
-        queryset=KhachHangModel.objects.all()
-    )
+    MaKH = KhachHangSerializer(read_only=True) 
     NgayLap = serializers.DateField()
     TongTien = serializers.DecimalField(
         max_digits=12, decimal_places=2, read_only=True

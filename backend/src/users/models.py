@@ -10,7 +10,7 @@ class KhachHangModel(models.Model):
     
     
     def __str__(self):
-        return f"{self.TenKhachHang} - {self.SoDienThoai}"
+        return f"{self.TenKhachHang}"
      
     
     
