@@ -10,6 +10,7 @@ import NhaCungCap from './pages/NhaCC/NhaCC';
 
 import "./icon"
 import Thuoc from './pages/Thuoc/Thuoc';
+import ThongKe from './pages/ThongKe/ThongKe';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="/admin/hangsx" element={<HangSX />} />
             <Route path="/admin/loai-thuoc" element={<LoaiThuoc />} />
             <Route path="/admin/nha-cung-cap" element={<NhaCungCap />} />
+            <Route path="/admin/thong-ke" element={<ThongKe />} />
           </Route>
 
           <Route path="/admin/dang-nhap" element={<DangNhap />}/>
