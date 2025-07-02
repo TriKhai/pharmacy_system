@@ -43,9 +43,9 @@ const KhachHang: React.FC = () => {
         setKhachHangs([...khachHangs, newKhachHang]);
         setIsOpenModal(false);
         alert("Thêm khách hàng thành công!");
-      } catch (error) {
+      } catch (error : any) {
         console.error("Lỗi khi thêm khách hàng:", error);
-        alert("Không thể thêm khách hàng");
+        alert(error.message || "Đã xảy ra lỗi khi thêm khách hàng.");
       }
     };
 

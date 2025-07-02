@@ -2,6 +2,16 @@ import axiosClient from "../config/axios";
 import type { KhachHangFormType, KhachHangType } from "../types/khachHang";
 import type { APIResponse } from "../types/utils";
 
+function extractErrorMessage(message: any): string {
+  if (typeof message === "string") return message;
+  if (typeof message === "object") {
+    const firstField = Object.keys(message)[0];
+    const errors = message[firstField];
+    if (Array.isArray(errors)) return errors[0];
+  }
+  return "Đã xảy ra lỗi.";
+}
+
 export const fetchKhachHangs = async (): Promise<KhachHangType[]> => {
   try {
     const res = await axiosClient.get<APIResponse<KhachHangType[]>>("user/");
@@ -18,13 +28,21 @@ export const createKhachHang = async (
 ): Promise<KhachHangType> => {
   try {
     const res = await axiosClient.post<APIResponse<KhachHangType>>("user/", {
-      data: form,
+      data: form, // hoặc chỉ form nếu bạn sửa backend
     });
-    if (!res.data.success) throw new Error(res.data.message);
+
+    if (!res.data.success) {
+      const message = extractErrorMessage(res.data.message);
+      throw new Error(message);
+    }
+
     return res.data.data!;
-  } catch (error) {
-    console.error("Lỗi khi tạo khách hàng:", error);
-    throw error;
+  } catch (error: any) {
+    if (error.response?.data?.message) {
+      const message = extractErrorMessage(error.response.data.message);
+      throw new Error(message);
+    }
+    throw new Error("Lỗi kết nối hoặc không xác định.");
   }
 };
 
