@@ -1,4 +1,4 @@
-import type { HangSXType } from "./HangSX";
+import type { HangSXType } from "./hangSX";
 import type { LoaiThuocType } from "./loaiThuoc";
 import type { NhaCungCapType } from "./nhaCungCap";
 
@@ -24,3 +24,13 @@ export interface ThuocFormType {
     SoLuongTonKho: number;
     HanSuDung:     Date | null | string;
 }
+
+export type ThuocSearchKey =
+  | "TenThuoc"
+  | "CongDung"
+  | "DonGia"
+  | "SoLuongTonKho"
+  | "HanSuDung"
+  | "Loai.TenLoai"
+  | "HangSX.TenHangSX"
+  | "NhaCungCap.TenNCC";

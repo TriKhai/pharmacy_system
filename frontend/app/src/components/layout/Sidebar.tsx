@@ -20,7 +20,7 @@ const Sidebar:React.FC = () => {
     { path: "/admin/hangsx", label: "Hãng Sản Xuất", icon: faFlask },
     { path: "/admin/hoa-don", label: "Hóa Đơn", icon: faFileInvoice },
     { path: "/admin/thong-ke", label: "Thống Kê", icon: faChartBar },
-    { path: "/admin/xuat-file", label: "Xuất file", icon: faFileExport },
+    // { path: "/admin/xuat-file", label: "Xuất file", icon: faFileExport },
   ];
 
     // CSS variable

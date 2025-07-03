@@ -47,21 +47,17 @@ export default function EntityStats() {
   const [data, setData] = useState<EntityCount | null>(null);
 
   useEffect(() => {
-    // Gọi API thực tế ở đây, ví dụ:
-    // fetch("/api/v1/stats/entities")
-    //   .then(res => res.json())
-    //   .then(setData);
-    
-    // Dữ liệu mock tạm thời
+
+    // TODO: ...
     setTimeout(() => {
       setData({
-        drugs: 256,
-        manufacturers: 12,
-        categories: 8,
-        suppliers: 5,
-        customers: 182,
-        invoices: 413,
-        invoiceDetails: 982,
+        drugs: 1,
+        manufacturers: 1,
+        categories: 1,
+        suppliers: 1,
+        customers: 1,
+        invoices: 1,
+        invoiceDetails: 1,
       });
     }, 300);
   }, []);

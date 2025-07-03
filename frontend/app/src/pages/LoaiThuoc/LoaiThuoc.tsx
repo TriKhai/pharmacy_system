@@ -3,13 +3,19 @@ import type { LoaiThuocFormType, LoaiThuocType } from "../../types/loaiThuoc";
 import DataTable, { type Column } from "../../components/layout/DataTable";
 import { createLoaiThuoc, deleteLoaiThuoc, fetchLoaiThuocs, updateLoaiThuoc } from "../../services/loaiThuocApi";
 import AddForm from "./LoaiThuocForm";
+import { filterAndSortData } from "../../components/utils/filterAndSortData";
+import { exportToJson } from "../../components/utils/exportJson";
+import { exportToExcel } from "../../components/utils/exportExcel";
 
 
 const LoaiThuoc: React.FC = () => {
     const [loaiThuocs, setLoaiThuocs] = useState<LoaiThuocType[]>([]);
     const [loaiThuoc, setLoaiThuoc] = useState<LoaiThuocType | null>(null);
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
-    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [query, setQuery] = useState("");
+    const [searchKey, setSearchKey] = useState<keyof LoaiThuocType>("TenLoai");
+    const [loading, setLoading] = useState<boolean>(false);
+  
 
     const columns: Column<LoaiThuocType>[] = [
       {
@@ -30,12 +36,15 @@ const LoaiThuoc: React.FC = () => {
     // fetc hdanh sách loại thuốc
     useEffect(() => {
       const getLoaiThuocs = async () => {
+        setLoading(true);
         try {
           const data = await fetchLoaiThuocs();
           setLoaiThuocs(data); 
         } catch (error) {
           console.error('Lỗi khi gọi API:', error);
-        } 
+        } finally {
+          setLoading(false);
+        }
       };
       getLoaiThuocs();
     }, []);
@@ -100,23 +109,8 @@ const LoaiThuoc: React.FC = () => {
       setLoaiThuoc(null)
     }
 
-    const handleSearch = async () => {
-      try {
-        const data = await fetchLoaiThuocs();
-        const filteredData = data.filter((lt) =>
-          lt.TenLoai.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setLoaiThuocs(filteredData);
-      } catch (error) {
-        console.error("Lỗi khi tìm kiếm:", error);
-        alert("Không thể tìm kiếm loại thuốc!");
-      }
-    }
-
-    const handelCancelSerch = async () => {
-      const data = await fetchLoaiThuocs()
-      setLoaiThuocs(data)
-      setSearchTerm("")
+    const handelCancelSearch = async () => {
+      setQuery("")
     }
 
     const handleClose = () => {
@@ -131,22 +125,57 @@ const LoaiThuoc: React.FC = () => {
       const { id, value } = e.target;
       setLoaiThuoc((prev) => prev ? { ...prev, [id]: value } : null);
     };
+
+    const filterData:LoaiThuocType[] = filterAndSortData<LoaiThuocType>(
+        loaiThuocs,
+        query,
+        searchKey
+    );
+
+    // Xuất file excel
+    const handleExportExcel = () => {
+      const data = loaiThuocs.map(lt => ({
+        "Mã loại thuốc": lt.MaLoai,
+        "Tên loại thuốc": lt.TenLoai,
+        "Đơn vị tính": lt.DonViTinh,
+      }));
     
+      exportToExcel(data, "danh_sach_loai_thuoc");
+    };
+    
+        // Xuất file json
+    const handleExportJson = () => {
+      exportToJson<LoaiThuocType>(loaiThuocs, "loai_thuoc");
+    };
+    
+
     return (
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2">
-          <DataTable<LoaiThuocType>
-            data={loaiThuocs}
-            columns={columns}
-            title="Danh sách loại thuốc"
-            onRowClick={handleRowClick}
-            selectedRowId={loaiThuoc?.MaLoai}
-            rowKey="MaLoai"
-          />
+          {loading ? (
+              <div className="flex justify-center items-center h-40">
+                <svg className="animate-spin h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                </svg>
+                <span className="ml-2 text-gray-500">Đang tải dữ liệu...</span>
+              </div>
+            ) : filterData.length === 0 ? (
+              <div className="text-center text-gray-500">Không tìm thấy khách hàng nào.</div>
+            ) : (
+              <DataTable<LoaiThuocType>
+                data={filterData}
+                columns={columns}
+                title="Danh sách loại thuốc"
+                onRowClick={handleRowClick}
+                selectedRowId={loaiThuoc?.MaLoai}
+                rowKey="MaLoai"
+              />
+            )}
         </div>
 
         <div className="col-span-1 flex flex-col gap-4">
-          <div className="p-4 shadow rounded">
+          <div className="p-4 shadow rounded border border-[#ccc]">
             <h3 className="font-semibold mb-4">Thông tin loại thuốc</h3>
 
 
@@ -175,28 +204,61 @@ const LoaiThuoc: React.FC = () => {
             </div>
           </div>
 
-          <div className="p-4 shadow rounded">
-            <h3 className="font-semibold mb-4">Tìm Kiếm Loại Thuốc</h3>
-            <div className="grid grid-cols-[120px_1fr] items-center gap-2">
-              <label htmlFor="searchTerm" className="">Tên loại thuốc:</label>
-              <input
-                id="searchTerm"
-                type="text"
-                className="border px-2 py-1 w-full" 
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-2 mt-4">
-              <button className={buttonClass} onClick={handleSearch}>
-                Tìm kiếm
-              </button>
-              <button className={buttonClass} onClick={handelCancelSerch}>
-                Hủy tìm kiếm
-              </button>
+          <div className="p-4 shadow border border-[#ccc]">
+            <h3 className="font-semibold mb-4">Tìm kiếm loại thuốc</h3>
+              <div className="grid grid-cols-[120px_1fr] items-center gap-2">
+                <label className="w-[120px]">Tìm theo:</label>
+                  <select
+                    value={searchKey}
+                    className="border px-2 py-1"
+                    onChange={(e) => setSearchKey(e.target.value as keyof LoaiThuocType)}
+                  >
+                    <option value="TenLoai">Tên loại thuốc</option>
+                    <option value="DonViTinh">Đơn vị tính</option>
+                  </select>
+          
+                  <label className="w-[120px]">Từ khóa:</label>
+                  <input
+                    type="text"
+                    className="border px-2 py-1 w-full"
+                    placeholder={
+                    searchKey === "TenLoai"
+                      ? "Nhập tên loại thuốc..."
+                      : "Nhập địa đơn vị tính..."
+                    }
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                  </div>
+          
+                  <div className="grid grid-cols-1 gap-2 mt-4">
+                    <button className={buttonClass} onClick={handelCancelSearch}>
+                      Hủy tìm kiếm
+                    </button>
+                  </div>
+          </div>
+
+          <div className="p-4 shadow rounded border border-[#ccc]">
+            <h3 className="font-semibold mb-4">Xuất file</h3>
+              <div className="grid grid-cols-[120px_1fr] items-center gap-2">
+                <label>Xuất file Excel:</label>
+                <button
+                  onClick={handleExportExcel}
+                  className={buttonClass}
+                >
+                  Export to excel
+                </button>
+
+                <label>Xuất file Json:</label>
+                <button
+                  onClick={handleExportJson}
+                  className={buttonClass}
+                >
+                  Export to json
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
         <div>
         <AddForm<LoaiThuocFormType>
