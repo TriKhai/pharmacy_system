@@ -12,8 +12,16 @@ const LoaiThuoc: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>("");
 
     const columns: Column<LoaiThuocType>[] = [
-      { key: 'TenLoai', label: 'Tên loại' },
-      { key: 'DonViTinh', label: 'Đơn vị tính' },
+      {
+        key: 'TenLoai',
+        label: 'Tên loại',
+        sortValue: (row) => row.TenLoai.toLowerCase(),
+      },
+      {
+        key: 'DonViTinh',
+        label: 'Đơn vị tính',
+        sortValue: (row) => row.DonViTinh.toLowerCase(),
+      },
     ];
 
     // CSS variable
@@ -132,7 +140,8 @@ const LoaiThuoc: React.FC = () => {
             columns={columns}
             title="Danh sách loại thuốc"
             onRowClick={handleRowClick}
-            selectedRow={loaiThuoc}
+            selectedRowId={loaiThuoc?.MaLoai}
+            rowKey="MaLoai"
           />
         </div>
 

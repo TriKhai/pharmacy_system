@@ -9,6 +9,7 @@ import { fetchHangSXs } from "../../services/hangSXApi";
 import { fetchNhaCungCaps } from "../../services/nhaCungCapApi";
 import { fetchLoaiThuocs } from "../../services/loaiThuocApi";
 import ThuocForm from "./ThuocForm";
+import { formatCurrency } from "../../types/utils";
 
 
 const Thuoc: React.FC = () => {
@@ -22,21 +23,32 @@ const Thuoc: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const columns: Column<ThuocType>[] = [
-    { key: 'TenThuoc', label: 'Tên thuốc' },
-    { key: 'CongDung', label: 'Công dụng' },
+    { 
+      key: 'TenThuoc', 
+      label: 'Tên thuốc',
+      sortValue: (row) => row.TenThuoc.toLowerCase()
+    },
+    { 
+      key: 'CongDung', 
+      label: 'Công dụng',
+      sortValue: (row) => row.CongDung?.toLowerCase() ?? '',
+    },
     {
       key: 'DonGia',
       label: 'Đơn giá',
-      render: (_, record) => Number(record.DonGia).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }),
+      sortValue: (row) => row.DonGia,
+      render: (_, record) => formatCurrency(record.DonGia),
     },
     {
       key: 'SoLuongTonKho',
       label: 'Số lượng kho',
+      sortValue: (row) => row.SoLuongTonKho,
       render: (_, record) => record.SoLuongTonKho.toString(),
     },
     {
       key: 'HanSuDung',
       label: 'Hạn sử dụng',
+      sortValue: (row) => row.HanSuDung ? new Date(row.HanSuDung).getTime() : 0,
       render: (_, record) =>
         record.HanSuDung
           ? new Date(record.HanSuDung).toLocaleDateString('vi-VN')
@@ -45,16 +57,19 @@ const Thuoc: React.FC = () => {
     {
       key: 'HangSX',
       label: 'Hãng sản xuất',
+      sortValue: (row) => row.HangSX?.TenHangSX?.toLowerCase() ?? '',
       render: (_, record) => record.HangSX?.TenHangSX ?? 'N/A',
     },
     {
       key: 'NhaCungCap',
       label: 'Nhà cung cấp',
+      sortValue: (row) => row.NhaCungCap?.TenNCC?.toLowerCase() ?? '',
       render: (_, record) => record.NhaCungCap?.TenNCC ?? 'N/A',
     },
     {
       key: 'Loai',
       label: 'Loại thuốc',
+      sortValue: (row) => row.Loai?.TenLoai?.toLowerCase() ?? '',
       render: (_, record) => record.Loai?.TenLoai ?? 'N/A',
     },
   ];
@@ -142,7 +157,10 @@ const Thuoc: React.FC = () => {
       alert("Chưa có dữ liệu cập nhật!")
       return;
     }
-    window.confirm(`Xác nhận xóa dữ liệu thuốc "${thuoc.TenThuoc}"`);
+    // window.confirm(`Xác nhận xóa dữ liệu thuốc "${thuoc.TenThuoc}"`);
+    const confirm = window.confirm(`Xác nhận xóa dữ liệu thuốc "${thuoc.TenThuoc}"`);
+    if (!confirm) return;
+    
     try {
       const message = await deleteThuoc(thuoc.MaThuoc);
       console.log(message)
@@ -417,7 +435,8 @@ const Thuoc: React.FC = () => {
           columns={columns}
           title={title}
           onRowClick={handleRowClick}
-          selectedRow={thuoc}
+          selectedRowId={thuoc?.MaThuoc}
+          rowKey="MaThuoc"
         />
       </div>
 
@@ -448,7 +467,7 @@ const Thuoc: React.FC = () => {
         <div className="p-4 shadow rounded">
           <h3 className="font-semibold mb-4">Tìm Kiếm Thuốc</h3>
           <div className="grid grid-cols-[120px_1fr] items-center gap-2">
-            <label htmlFor="searchTerm" className="">Tên huốc:</label>
+            <label htmlFor="searchTerm" className="">Tên thuốc:</label>
             <input
               id="searchTerm"
               type="text"

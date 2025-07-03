@@ -12,11 +12,22 @@ const KhachHang: React.FC = () => {
     // const [searchTerm, setSearchTerm] = useState<string>("");
     const [query, setQuery] = useState("");
 
-    
     const columns: Column<KhachHangType>[] = [
-      { key: 'TenKhachHang', label: 'Tên Khách Hàng' },
-      { key: 'SoDienThoai', label: 'Số Điện Thoại' },
-      { key: 'DiaChi', label: 'Địa Chỉ' },
+      {
+        key: 'TenKhachHang',
+        label: 'Tên Khách Hàng',
+        sortValue: (row) => row.TenKhachHang.toLowerCase()
+      },
+      {
+        key: 'SoDienThoai',
+        label: 'Số Điện Thoại',
+        sortValue: (row) => row.SoDienThoai
+      },
+      {
+        key: 'DiaChi',
+        label: 'Địa Chỉ',
+        sortValue: (row) => row.DiaChi
+      },
     ];
 
     // CSS variable
@@ -43,9 +54,13 @@ const KhachHang: React.FC = () => {
         setKhachHangs([...khachHangs, newKhachHang]);
         setIsOpenModal(false);
         alert("Thêm khách hàng thành công!");
-      } catch (error : any) {
+      } catch (error : unknown) {
         console.error("Lỗi khi thêm khách hàng:", error);
-        alert(error.message || "Đã xảy ra lỗi khi thêm khách hàng.");
+        if (error instanceof Error) {
+          alert(error.message);
+        } else {
+          alert("Đã xảy ra lỗi không xác định.");
+        }
       }
     };
 
@@ -142,7 +157,8 @@ const KhachHang: React.FC = () => {
             columns={columns}
             title="Danh sách khách hàng"
             onRowClick={handleRowClick}
-            selectedRow={khachHang}
+            selectedRowId={khachHang?.MaKhachHang}
+            rowKey="MaKhachHang"
           />
         </div>
 

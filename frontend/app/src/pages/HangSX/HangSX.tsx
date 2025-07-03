@@ -12,8 +12,16 @@ const HangSX: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>("");
 
     const columns: Column<HangSXType>[] = [
-      { key: 'TenHangSX', label: 'Tên Hãng Sãn Xuất' },
-      { key: 'QuocGia', label: 'Quốc Gia' },
+      {
+        key: 'TenHangSX',
+        label: 'Tên Hãng Sãn Xuất',
+        sortValue: (row) => row.TenHangSX.toLowerCase()
+      },
+      {
+        key: 'QuocGia',
+        label: 'Quốc Gia',
+        sortValue: (row) => row.QuocGia.toLowerCase()
+      }
     ];
 
     // CSS variable
@@ -132,7 +140,8 @@ const HangSX: React.FC = () => {
             columns={columns}
             title="Danh sách hãng sản xuất"
             onRowClick={handleRowClick}
-            selectedRow={HangSX}
+            selectedRowId={HangSX?.MaHangSX}
+            rowKey="MaHangSX"
           />
         </div>
 

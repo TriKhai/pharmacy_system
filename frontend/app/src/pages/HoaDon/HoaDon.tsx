@@ -34,6 +34,7 @@ const HoaDon: React.FC = () => {
         {
             key: "KhachHang",
             label: "Tên KH",
+            sortValue: (row) => row.KhachHang?.TenKhachHang ?? "",
             render: (_, record) => (
                 <div
                     onClick={() => {
@@ -53,25 +54,27 @@ const HoaDon: React.FC = () => {
         {
             key: "NgayLap",
             label: "Ngày lập",
+            sortValue: (row) => new Date(row.NgayLap).getTime(),
             render: (_, record) => new Date(record.NgayLap).toLocaleDateString("vi-VN"),
         },
         {
             key: "TongTien",
             label: "Tổng tiền",
+            sortValue: (row) => row.TongTien,
             render: (_, record) => formatCurrency(record.TongTien),
         },
-        {
-            key: "ChiTiet",
-            label: "Chi tiết",
-            render: (_, record) => (
-                <button
-                    onClick={() => handleRowClick(record)}
-                    className="text-sm text-blue-500 hover:underline"
-                >
-                    Xem chi tiết
-                </button>
-            ),
-        },
+        // {
+        //     key: "ChiTiet",
+        //     label: "Chi tiết",
+        //     render: (_, record) => (
+        //         <button
+        //             onClick={() => handleRowClick(record)}
+        //             className="text-sm text-blue-500 hover:underline"
+        //         >
+        //             Xem chi tiết
+        //         </button>
+        //     ),
+        // },
     ];
 
     return (
@@ -83,7 +86,8 @@ const HoaDon: React.FC = () => {
                     columns={columns}
                     title="Danh sách hóa đơn"
                     onRowClick={handleRowClick}
-                    selectedRow={selectedHoaDon}
+                    selectedRowId={selectedHoaDon?.MaHoaDon}
+                    rowKey="MaHoaDon"
                 />
             </div>
 

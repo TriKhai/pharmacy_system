@@ -12,9 +12,18 @@ const NhaCungCap: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>("");
 
     const columns: Column<NhaCungCapType>[] = [
-      { key: 'TenNCC', label: 'Tên nhà cung cấp' },
-      { key: 'SoDienThoai', label: 'Số Điện Thoại' },
+      {
+        key: 'TenNCC',
+        label: 'Tên nhà cung cấp',
+        sortValue: (row) => row.TenNCC.toLowerCase(),
+      },
+      {
+        key: 'SoDienThoai',
+        label: 'Số Điện Thoại',
+        sortValue: (row) => row.SoDienThoai,
+      },
     ];
+
 
     // CSS variable
     const buttonClass = "bg-[#12B0C2] text-white px-4 py-2 rounded hover:bg-[#0E8DA1] transition";
@@ -72,7 +81,9 @@ const NhaCungCap: React.FC = () => {
         alert("Chưa có dữ liệu cập nhật!")
         return;
       }
-      window.confirm(`Xác nhận xóa dữ liệu nhà cung cấp "${nhaCungCap.TenNCC}"`);
+      // window.confirm(`Xác nhận xóa dữ liệu nhà cung cấp "${nhaCungCap.TenNCC}"`);
+      if (!window.confirm(`Xác nhận xóa dữ liệu nhà cung cấp "${nhaCungCap.TenNCC}"?`)) return;
+
       try {
         const message = await deleteNhaCungCap(nhaCungCap.MaNCC);
         console.log(message)
@@ -132,7 +143,8 @@ const NhaCungCap: React.FC = () => {
             columns={columns}
             title="Danh sách nhà cung cấp"
             onRowClick={handleRowClick}
-            selectedRow={nhaCungCap}
+            selectedRowId={nhaCungCap?.MaNCC}
+            rowKey="MaNCC"
           />
         </div>
 

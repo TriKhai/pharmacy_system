@@ -9,6 +9,7 @@ export type APIResponse<T> = {
   data?: T;
 };
 
-export const formatCurrency = (value: number): string => {
-  return value.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
-};
+export function formatCurrency(value: number): string {
+  return Number(value).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+}
+
