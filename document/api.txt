@@ -112,7 +112,7 @@ DELETE: /api/v1/user/<str:maKH>/
 
 
 --------- *** THỐNG KÊ
-GET /api/v1/thong-ke/available-years
+GET /api/v1/revenue/available-years
     REQ: 
     RES: {
         "message": ""
@@ -121,7 +121,7 @@ GET /api/v1/thong-ke/available-years
     }
 
 
-GET /api/v1/thong-ke/nam?nam=2025
+GET /api/v1/revenue/year?year=2025
     REQ:
 
     RES: {
@@ -143,7 +143,7 @@ GET /api/v1/thong-ke/nam?nam=2025
         "success": "" 
     }
 
-GET /api/v1/thong-ke/thang?nam=2025&thang=6
+GET /api/v1/revenue/month?year=2025&month=6
     REQ:
 
     RES: {
@@ -158,7 +158,7 @@ GET /api/v1/thong-ke/thang?nam=2025&thang=6
         "success": "" 
     }
 
-GET /api/v1/thong-ke/tuan?batdau=2025-06-01
+GET /api/v1/revenue/week?start=2025-06-01
     REQ:
 
     RES: {
@@ -176,7 +176,7 @@ GET /api/v1/thong-ke/tuan?batdau=2025-06-01
     }
 
 
-GET /api/v1/thong-ke/tong-quan
+GET /api/v1/revenue/overview
     REQ:
 
     RES: {
