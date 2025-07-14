@@ -174,3 +174,22 @@ GET /api/v1/thong-ke/tuan?batdau=2025-06-01
         ]
         "success": "" 
     }
+
+
+GET /api/v1/thong-ke/tong-quan
+    REQ:
+
+    RES: {
+        "message": ""
+        "data": {
+            "drugs": 132, 
+            "manufacturers": 12,
+            "categories": 6,
+            "suppliers": 8,
+            "customers": 75,
+            "invoices": 105,
+            "invoiceDetails": 340
+        }
+
+        "success": "" 
+    }
