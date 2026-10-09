@@ -2,9 +2,9 @@
 
 ## Member List
 
-1. Châu Thế Khanh - B2207528 - khanhb2207528@student.ctu.edu.vn
-2. Lý Trí Khải - B2207530 - khaib2207530@student.ctu.edu.vn
-3. Nguyễn Lê Tấn Thành - B2207565 - thanhb2207565@student.ctu.edu.vn
+1. Châu Thế Khanh - xxx - xxx@xxx.xxx.edu.vn
+2. Lý Trí Khải - xxx - xxx@xxx.xxx.edu.vn
+3. Nguyễn Lê Tấn Thành - xxx - xxx@xxx.xxx.edu.vn
 
 ## Technologies Used:
 
